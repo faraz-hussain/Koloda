@@ -20,7 +20,8 @@ class BackgroundAnimationViewController: UIViewController {
 
     @IBOutlet weak var kolodaView: CustomKolodaView!
     @IBOutlet weak var arrowView: UIImageView!
-    
+    @IBOutlet weak var textView: UIImageView!
+
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,8 +80,10 @@ extension BackgroundAnimationViewController: KolodaViewDataSource {
         let imageName = names[random]
         
         let arrowNumber = arc4random_uniform(2) + 1
-        
         arrowView.image = UIImage(named: "Arrow\(arrowNumber)")
+
+        let textNumber = arc4random_uniform(2) + 1
+        textView.image = UIImage(named: "Text\(textNumber)")
 
         return UIImageView(image: UIImage(named: imageName))
     }
