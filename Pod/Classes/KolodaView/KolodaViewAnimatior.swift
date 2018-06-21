@@ -15,7 +15,7 @@ open class KolodaViewAnimator {
     public typealias AnimationCompletionBlock = ((Bool) -> Void)?
     
     private weak var koloda: KolodaView?
-    
+        
     public init(koloda: KolodaView) {
         self.koloda = koloda
     }

@@ -10,7 +10,7 @@ import UIKit
 import Koloda
 import pop
 
-private let numberOfCards: Int = 5
+private let numberOfCards: Int = 10
 private let frameAnimationSpringBounciness: CGFloat = 9
 private let frameAnimationSpringSpeed: CGFloat = 16
 private let kolodaCountOfVisibleCards = 2
@@ -19,6 +19,7 @@ private let kolodaAlphaValueSemiTransparent: CGFloat = 0.1
 class BackgroundAnimationViewController: UIViewController {
 
     @IBOutlet weak var kolodaView: CustomKolodaView!
+    @IBOutlet weak var arrowView: UIImageView!
     
     //MARK: Lifecycle
     override func viewDidLoad() {
@@ -31,20 +32,6 @@ class BackgroundAnimationViewController: UIViewController {
         
         self.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
     }
-    
-    
-    //MARK: IBActions
-    @IBAction func leftButtonTapped() {
-        kolodaView?.swipe(.left)
-    }
-    
-    @IBAction func rightButtonTapped() {
-        kolodaView?.swipe(.right)
-    }
-    
-    @IBAction func undoButtonTapped() {
-        kolodaView?.revertAction()
-    }
 }
 
 //MARK: KolodaViewDelegate
@@ -52,10 +39,6 @@ extension BackgroundAnimationViewController: KolodaViewDelegate {
     
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
         kolodaView.resetCurrentCardIndex()
-    }
-    
-    func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        UIApplication.shared.openURL(URL(string: "https://yalantis.com/")!)
     }
     
     func kolodaShouldApplyAppearAnimation(_ koloda: KolodaView) -> Bool {
@@ -90,7 +73,16 @@ extension BackgroundAnimationViewController: KolodaViewDataSource {
     }
     
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        return UIImageView(image: UIImage(named: "cards_\(index + 1)"))
+        let path = Bundle.main.path(forResource: "Images", ofType: "plist")!
+        let names = NSArray(contentsOfFile: path) as! [String]
+        let random = Int(arc4random_uniform(UInt32(names.count)))
+        let imageName = names[random]
+        
+        let arrowNumber = arc4random_uniform(2) + 1
+        
+        arrowView.image = UIImage(named: "Arrow\(arrowNumber)")
+
+        return UIImageView(image: UIImage(named: imageName))
     }
     
     func koloda(_ koloda: KolodaView, viewForCardOverlayAt index: Int) -> OverlayView? {

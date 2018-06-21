@@ -14,7 +14,7 @@ private var numberOfCards: Int = 5
 class ViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
-    
+
     fileprivate var dataSource: [UIImage] = {
         var array: [UIImage] = []
         for index in 0..<numberOfCards {
@@ -38,17 +38,6 @@ class ViewController: UIViewController {
     
     // MARK: IBActions
 
-    @IBAction func leftButtonTapped() {
-        kolodaView?.swipe(.left)
-    }
-    
-    @IBAction func rightButtonTapped() {
-        kolodaView?.swipe(.right)
-    }
-    
-    @IBAction func undoButtonTapped() {
-        kolodaView?.revertAction()
-    }
 }
 
 // MARK: KolodaViewDelegate
@@ -62,11 +51,6 @@ extension ViewController: KolodaViewDelegate {
         }
         kolodaView.insertCardAtIndexRange(position..<position + 4, animated: true)
     }
-    
-    func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        UIApplication.shared.openURL(URL(string: "https://yalantis.com/")!)
-    }
-
 }
 
 // MARK: KolodaViewDataSource
